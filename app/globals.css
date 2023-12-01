@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .main-container {
+    @apply w-full m-auto max-w-[2520px] px-4 sm:px-2 md:px-10 xl:px-20;
+  }
+
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .text-medium-small {
+    @apply text-sm font-medium;
+  }
+  .text-bold-small {
+    @apply text-sm font-bold;
+  }
+  .text-medium-base {
+    @apply text-base font-medium;
+  }
+  .text-bold-base {
+    @apply text-base font-bold;
+  }
+
+  .main-search {
+    @apply rounded-full shadow-sm hover:shadow-md border cursor-pointer w-full md:w-auto py-2 transition;
+  }
+
+  .user-menu {
+    @apply flex-center gap-3 rounded-full border border-neutral-200 shadow-sm hover:shadow-md transition p-4 md:py-1 md:px-2;
+  }
+}
