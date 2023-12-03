@@ -24,8 +24,8 @@ const Input = ({
       <input
         id={id}
         type={type}
-        required={required}
         disabled={disabled}
+        // Field is required to be filled
         {...register(id, { required })}
         placeholder=' '
         className={`

@@ -54,10 +54,10 @@ body {
     @apply hover:bg-neutral-100 transition font-semibold px-4 py-3;
   }
   .modal-overlay {
-    @apply fixed inset-0 z-50 flex justify-center items-center overflow-x-hidden  overflow-y-scroll  outline-none  bg-neutral-800/70;
+    @apply fixed inset-0 z-50 flex justify-center items-center overflow-x-hidden overflow-y-auto outline-none bg-neutral-800/70;
   }
   .modal-container {
-    @apply relative w-full md:w-4/6 lg:w-3/5 xl:w-2/5 h-full my-6 mx-auto;
+    @apply relative w-full md:w-4/6 lg:w-3/5 xl:w-2/5 h-full md:h-auto my-6 mx-auto;
   }
   .modal-content {
     @apply bg-white shadow-lg rounded-lg w-full flex flex-col gap-4 relative h-full md:h-auto outline-none focus:outline-none;

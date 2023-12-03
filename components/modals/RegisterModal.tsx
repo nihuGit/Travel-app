@@ -4,6 +4,8 @@ import { useRegisterModal } from '@/hooks/useRegisterModal';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
+import { registerUser } from '@/lib/actions/user.actions';
+import toast from 'react-hot-toast';
 import Modal from '@/components/modals/Modal';
 import Heading from '../ui/Heading';
 import Input from '../ui/Input';
@@ -78,8 +80,18 @@ const RegisterModal = () => {
     </div>
   );
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
+    try {
+      console.log(data);
+      await registerUser(data);
+      toast.success('Registered successfully');
+      registerModal.onClose();
+    } catch (error: any) {
+      toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <Modal
