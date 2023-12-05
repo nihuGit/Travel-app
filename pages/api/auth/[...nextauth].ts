@@ -18,10 +18,10 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
     CredentialsProvider({
-      name: 'Credentials',
+      name: 'credentials',
       credentials: {
-        email: { label: 'Email', type: 'text' },
-        password: { label: 'Password', type: 'password' },
+        email: { label: 'email', type: 'text' },
+        password: { label: 'password', type: 'password' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -37,11 +37,11 @@ export const authOptions: AuthOptions = {
         }
 
         const isPasswordCorrect = await bcrypt.compare(
-          user.hashedPassword,
-          credentials.password
+          credentials.password,
+          user.hashedPassword
         );
         if (!isPasswordCorrect) {
-          throw new Error('Invalid Credentials');
+          throw new Error('Invalid Password');
         }
         return user;
       },
@@ -52,6 +52,10 @@ export const authOptions: AuthOptions = {
     signOut: '/',
   },
   debug: process.env.NODE_ENV === 'development',
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt',
+  },
 };
 
 export default NextAuth(authOptions);

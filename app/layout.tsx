@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
-import Navbar from '@/components/shared/Navbar';
-import './globals.css';
-import Modal from '@/components/modals/Modal';
+import { getCurrentUser } from '@/lib/actions/user.actions';
+import Navbar from '@/components/shared/navbar/Navbar';
 import ClientOnly from '@/components/shared/ClientOnly';
 import RegisterModal from '@/components/modals/RegisterModal';
+import LoginModal from '@/components/modals/LoginModal';
 import ToasterProvider from '@/providers/ToasterProvider';
+import './globals.css';
 
 const nunito = Nunito({ subsets: ['latin'] });
 
@@ -14,18 +15,20 @@ export const metadata: Metadata = {
   description: 'Airbnb Clone created using Next.js',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
   return (
     <html lang='en'>
       <body className={nunito.className}>
         <ClientOnly>
           <ToasterProvider />
+          <LoginModal />
           <RegisterModal />
-          <Navbar />
+          <Navbar currentUser={currentUser} />
         </ClientOnly>
         {children}
       </body>
