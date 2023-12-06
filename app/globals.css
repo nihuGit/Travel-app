@@ -62,4 +62,7 @@ body {
   .modal-content {
     @apply bg-white shadow-lg rounded-lg w-full flex flex-col gap-4 relative h-full md:h-auto outline-none focus:outline-none;
   }
+  .category-box {
+    @apply flex flex-col justify-center items-center gap-2 cursor-pointer p-3 border-b-2 transition hover:text-neutral-800
+  }
 }
