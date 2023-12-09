@@ -6,6 +6,7 @@ import ClientOnly from '@/components/shared/ClientOnly';
 import RegisterModal from '@/components/modals/RegisterModal';
 import LoginModal from '@/components/modals/LoginModal';
 import ToasterProvider from '@/providers/ToasterProvider';
+import RentModal from '@/components/modals/RentModal';
 import './globals.css';
 
 const nunito = Nunito({ subsets: ['latin'] });
@@ -28,6 +29,7 @@ export default async function RootLayout({
           <ToasterProvider />
           <LoginModal />
           <RegisterModal />
+          <RentModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
         {children}

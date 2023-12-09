@@ -5,6 +5,7 @@ import { useLoginModal } from '@/hooks/useLoginModal';
 import { signOut } from 'next-auth/react';
 import { useState } from 'react';
 import { SafeUser } from '@/types';
+import { useRentModal } from '@/hooks/useRentModal';
 import Avatar from '../Avatar';
 
 interface UserMenuProps {
@@ -14,11 +15,21 @@ interface UserMenuProps {
 const UserMenu = ({ currentUser }: UserMenuProps) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const rentModal = useRentModal();
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleClick = () => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+    rentModal.onOpen();
+  };
   return (
     <div className='flex-center gap-3'>
-      <p className='hidden md:block text-medium-base cursor-pointer'>
+      <p
+        className='hidden md:block text-medium-base cursor-pointer'
+        onClick={handleClick}
+      >
         Airbnb your home
       </p>
 
@@ -58,7 +69,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
                 <div className='user-menu-card-item' onClick={() => {}}>
                   My properties
                 </div>
-                <div className='user-menu-card-item' onClick={() => {}}>
+                <div className='user-menu-card-item' onClick={handleClick}>
                   Airbnb my home
                 </div>
                 <hr />

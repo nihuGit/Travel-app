@@ -8,6 +8,13 @@ body {
   height: 100%;
 }
 
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
+}
+
 @layer components {
   .main-container {
     @apply w-full m-auto max-w-[2520px] px-4 sm:px-2 md:px-10 xl:px-20;
@@ -48,10 +55,10 @@ body {
     @apply flex-center gap-3 rounded-full border border-neutral-200 shadow-sm hover:shadow-md transition p-4 md:py-1 md:px-2 cursor-pointer;
   }
   .user-menu-card {
-    @apply absolute top-12 right-0 py-3 rounded-xl w-[40vw] md:w-3/4 overflow-hidden border border-neutral-200 shadow-md;
+    @apply absolute top-12 right-0 py-3 rounded-xl w-[40vw] md:w-3/4 overflow-hidden border border-neutral-200 shadow-md bg-neutral-100;
   }
   .user-menu-card-item {
-    @apply hover:bg-neutral-100 transition font-semibold px-4 py-3;
+    @apply hover:bg-neutral-200 transition font-semibold px-4 py-3;
   }
   .modal-overlay {
     @apply fixed inset-0 z-50 flex justify-center items-center overflow-x-hidden overflow-y-auto outline-none bg-neutral-800/70;
@@ -63,6 +70,9 @@ body {
     @apply bg-white shadow-lg rounded-lg w-full flex flex-col gap-4 relative h-full md:h-auto outline-none focus:outline-none;
   }
   .category-box {
-    @apply flex flex-col justify-center items-center gap-2 cursor-pointer p-3 border-b-2 transition hover:text-neutral-800
+    @apply flex flex-col justify-center items-center gap-2 cursor-pointer p-3 border-b-2 transition hover:text-neutral-800;
+  }
+  .category-input {
+    @apply flex flex-col gap-3 cursor-pointer border-2 p-3 transition rounded-xl text-neutral-500 hover:text-neutral-800;
   }
 }
