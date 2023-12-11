@@ -8,10 +8,10 @@ const formattedCountries = countries.map((country) => ({
   flag: country.flag,
 }));
 
-const useCountries = () => {
+const useCountries: any = () => {
   const getAllCountries = () => formattedCountries;
   const getCountry = (value: string) =>
-    formattedCountries.find((country) => (country.value = value));
+    formattedCountries.find((country) => country.label === value);
   return { getAllCountries, getCountry };
 };
 

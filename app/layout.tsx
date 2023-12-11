@@ -25,14 +25,14 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body className={nunito.className}>
-        <ClientOnly>
-          <ToasterProvider />
-          <LoginModal />
-          <RegisterModal />
-          <RentModal />
-          <Navbar currentUser={currentUser} />
-        </ClientOnly>
-        {children}
+        {/* <ClientOnly> */}
+        <ToasterProvider />
+        <LoginModal />
+        <RegisterModal />
+        <RentModal />
+        <Navbar currentUser={currentUser} />
+        {/* </ClientOnly> */}
+        <div className='pb-20 pt-28'>{children}</div>
       </body>
     </html>
   );

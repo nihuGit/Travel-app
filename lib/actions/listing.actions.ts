@@ -56,3 +56,16 @@ export const createListing = async (data: ListingParams) => {
     throw new Error(`Error creating listing: ${error.message}`);
   }
 };
+
+export const getAllListings = async () => {
+  try {
+    const listings = await prisma.listing.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+    return listings;
+  } catch (error: any) {
+    throw new Error(`Error fetching listings: ${error.message}`);
+  }
+};
