@@ -7,7 +7,7 @@ import { createListing } from '@/lib/actions/listing.actions';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Modal from './Modal';
-import Heading from '../ui/Heading';
+import Heading from '../shared/Heading';
 import CategoryInput from '../inputs/CategoryInput';
 import CountrySelect from '../inputs/CountrySelect';
 import Counter from '../inputs/Counter';

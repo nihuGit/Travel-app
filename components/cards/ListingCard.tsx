@@ -1,15 +1,15 @@
 'use client';
 import { format } from 'date-fns';
-import { Listing, Reservation } from '@prisma/client';
+import { Reservation } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { SafeUser } from '@/types';
+import { SafeUser, SafeListing } from '@/types';
 import { useMemo } from 'react';
 import Image from 'next/image';
 import useCountries from '@/hooks/useCountries';
 import HeartButton from '../shared/HeartButton';
 
 interface ListingCardProps {
-  listing: Listing;
+  listing: SafeListing;
   currentUser: SafeUser | null;
   reservation?: Reservation;
 }

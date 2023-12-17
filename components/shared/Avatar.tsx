@@ -10,7 +10,8 @@ const Avatar = ({ image }: AvatarProps) => {
     <Image
       src={image || '/images/placeholder.jpg'}
       alt='Profile'
-      fill
+      width={30}
+      height={30}
       className='rounded-full'
     />
   );

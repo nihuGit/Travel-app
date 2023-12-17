@@ -9,7 +9,7 @@ import { registerUser } from '@/lib/actions/user.actions';
 import { signIn } from 'next-auth/react';
 import toast from 'react-hot-toast';
 import Modal from '@/components/modals/Modal';
-import Heading from '../ui/Heading';
+import Heading from '../shared/Heading';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 

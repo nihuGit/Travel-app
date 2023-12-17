@@ -36,7 +36,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
       <div className='user-menu' onClick={() => setIsOpen((value) => !value)}>
         <AiOutlineMenu size={18} />
         <div className='hidden md:block relative w-7 h-7'>
-          <Avatar />
+          <Avatar image={currentUser?.image} />
         </div>
         {isOpen && (
           <div className='user-menu-card'>
