@@ -93,7 +93,6 @@ const RentModal = () => {
     }
     setIsLoading(true);
     try {
-      console.log('Data', data);
       await createListing(data);
       reset();
       router.refresh();

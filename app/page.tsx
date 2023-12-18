@@ -1,11 +1,11 @@
-import { getAllListings } from '@/lib/actions/listing.actions';
+import { IListingParams, getAllListings } from '@/lib/actions/listing.actions';
 import { getCurrentUser } from '@/lib/actions/user.actions';
 import EmptyState from '@/components/shared/EmptyState';
 import ListingCard from '@/components/cards/ListingCard';
 import ClientOnly from '@/components/shared/ClientOnly';
 
-const Home = async () => {
-  const listings = await getAllListings();
+const Home = async ({ searchParams }: { searchParams: IListingParams }) => {
+  const listings = await getAllListings(searchParams);
   const currentUser = await getCurrentUser();
   if (listings.length === 0) {
     return (

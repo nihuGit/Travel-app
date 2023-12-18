@@ -5,11 +5,7 @@ import ListingClient from './ListingClient';
 import EmptyState from '@/components/shared/EmptyState';
 import ClientOnly from '@/components/shared/ClientOnly';
 
-const ListingDetails = async ({
-  params,
-}: {
-  params: { listingId: string };
-}) => {
+const ListingPage = async ({ params }: { params: { listingId: string } }) => {
   const listing = await getListing(params.listingId);
   const currentUser = await getCurrentUser();
   const reservations = await getReservations(params);
@@ -31,4 +27,4 @@ const ListingDetails = async ({
   );
 };
 
-export default ListingDetails;
+export default ListingPage;

@@ -62,8 +62,9 @@ const ListingClient = ({
         endDate: dateRange.endDate as Date,
         totalAmount,
       });
-      toast.success('Sucess');
-      router.refresh();
+      toast.success('Listing Reserved!');
+      setDateRange(selectionRange);
+      router.push('/trips');
     } catch (error) {
       toast.error('Something went wrong!');
     } finally {

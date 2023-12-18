@@ -20,7 +20,6 @@ const DatePicker = ({ value, disabledDates, onChange }: DatePickerProps) => {
       date={new Date()}
       rangeColors={['#262626']}
       minDate={new Date()}
-      direction="vertical"
     />
   );
 };

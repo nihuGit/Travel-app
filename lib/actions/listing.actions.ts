@@ -57,9 +57,20 @@ export const createListing = async (data: ListingParams) => {
   }
 };
 
-export const getAllListings = async () => {
+export interface IListingParams {
+  userId?: string;
+}
+
+export const getAllListings = async (params: IListingParams) => {
   try {
+    const { userId } = params;
+    let query: any = {};
+    if (userId) {
+      query.userId = userId;
+    }
+
     const listings = await prisma.listing.findMany({
+      where: query,
       orderBy: {
         createdAt: 'desc',
       },
@@ -107,12 +118,26 @@ export const getListing = async (listingId: string) => {
   }
 };
 
-export const setAsFavouriteListing = async (listingId: string) => {
-  console.log('Favourite Listing: ', listingId);
+export const deleteListing = async (listingId: string) => {
   try {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
-      throw new Error('Login first');
+      throw new Error('Not Authorized');
+    }
+    await prisma.listing.deleteMany({
+      where: { id: listingId, userId: currentUser.id },
+    });
+    return { message: 'success' };
+  } catch (error: any) {
+    throw new Error(`Error deleting listing: ${error.message}`);
+  }
+};
+
+export const setAsFavouriteListing = async (listingId: string) => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      throw new Error('Not Authorized');
     }
     if (!listingId || typeof listingId !== 'string') {
       throw new Error('Invalid ID');
@@ -129,11 +154,10 @@ export const setAsFavouriteListing = async (listingId: string) => {
 };
 
 export const unsetAsFavouriteListing = async (listingId: string) => {
-  console.log('Not Favourite Listing: ', listingId);
   try {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
-      throw new Error('Login first');
+      throw new Error('Not Authorized');
     }
     if (!listingId || typeof listingId !== 'string') {
       throw new Error('Invalid ID');
@@ -146,5 +170,28 @@ export const unsetAsFavouriteListing = async (listingId: string) => {
     });
   } catch (error: any) {
     throw new Error(`Error unsetting as favourite listing: ${error.message}`);
+  }
+};
+
+export const getFavouriteListings = async () => {
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      return [];
+    }
+    const favourites = await prisma.listing.findMany({
+      where: {
+        id: {
+          in: [...(currentUser.favouriteIds || [])],
+        },
+      },
+    });
+    const safeFavourites = favourites.map((listing) => ({
+      ...listing,
+      createdAt: listing.createdAt.toISOString(),
+    }));
+    return safeFavourites;
+  } catch (error: any) {
+    throw new Error(`Error getting favourite listings: ${error.message}`);
   }
 };

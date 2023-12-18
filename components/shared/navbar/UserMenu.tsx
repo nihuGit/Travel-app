@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { useRegisterModal } from '@/hooks/useRegisterModal';
 import { useLoginModal } from '@/hooks/useLoginModal';
@@ -13,6 +14,7 @@ interface UserMenuProps {
 }
 
 const UserMenu = ({ currentUser }: UserMenuProps) => {
+  const router = useRouter();
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
@@ -57,16 +59,28 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
               </>
             ) : (
               <>
-                <div className='user-menu-card-item' onClick={() => {}}>
+                <div
+                  className='user-menu-card-item'
+                  onClick={() => router.push('/trips')}
+                >
                   My trips
                 </div>
-                <div className='user-menu-card-item' onClick={() => {}}>
+                <div
+                  className='user-menu-card-item'
+                  onClick={() => router.push('/favourites')}
+                >
                   My favourites
                 </div>
-                <div className='user-menu-card-item' onClick={() => {}}>
+                <div
+                  className='user-menu-card-item'
+                  onClick={() => router.push('/reservations')}
+                >
                   My reservations
                 </div>
-                <div className='user-menu-card-item' onClick={() => {}}>
+                <div
+                  className='user-menu-card-item'
+                  onClick={() => router.push('/properties')}
+                >
                   My properties
                 </div>
                 <div className='user-menu-card-item' onClick={handleClick}>

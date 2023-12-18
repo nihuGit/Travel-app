@@ -26,7 +26,7 @@ const ListingReservation = ({
   return (
     <div className='bg-white border border-neutral-200 rounded-xl overflow-hidden'>
       <div className='flex items-center gap-1 p-4'>
-        <p className='font-semibold text-2xl text-neutral-800'>$ {price}</p>
+        <p className='font-semibold text-2xl text-neutral-800'>${price}</p>
         <p className='font-light text-neutral-600'>night</p>
       </div>
       <hr />
@@ -36,11 +36,13 @@ const ListingReservation = ({
         onChange={(value) => onChange(value.selection)}
       />
       <hr />
-      <Button disabled={disabled} label='Reserve' onClick={onSubmit} />
+      <div className='p-4'>
+        <Button disabled={disabled} label='Reserve' onClick={onSubmit} />
+      </div>
       <hr />
       <div className='flex-between text-lg font-semibold text-neutral-800 p-4'>
         <p>Total</p>
-        <p>$ {totalAmount}</p>
+        <p>${totalAmount}</p>
       </div>
     </div>
   );

@@ -32,7 +32,6 @@ export async function registerUser({ name, email, password }: UserParams) {
 export async function getSession() {
   try {
     const session = await getServerSession(authOptions);
-    console.log('Session: ', session); // Log the session to check if it exists
     return session;
   } catch (error: any) {
     console.error('Error getting session:', error);
