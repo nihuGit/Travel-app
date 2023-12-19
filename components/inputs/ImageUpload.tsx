@@ -18,7 +18,7 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
   };
   return (
     <CldUploadWidget
-      uploadPreset='z969vdop'
+      uploadPreset={process.env.NEXT_UPLOAD_PRESET}
       onUpload={handleUpload}
       options={{ maxFiles: 1 }}
     >
