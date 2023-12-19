@@ -1,15 +1,8 @@
 'use client';
+import { CountrySelectValue } from '@/types';
 import useCountries from '@/hooks/useCountries';
 import Select from 'react-select';
 import '@/node_modules/flag-icons/css/flag-icons.min.css';
-
-type CountrySelectValue = {
-  value: string;
-  label: string;
-  flag: string;
-  latlng: number[];
-  region: string;
-};
 
 interface CountrySelectProps {
   value?: CountrySelectValue;

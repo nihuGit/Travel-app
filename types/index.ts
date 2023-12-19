@@ -21,3 +21,11 @@ export type SafeReservation = Omit<
   endDate: string;
   createdAt: string;
 };
+
+export type CountrySelectValue = {
+  value: string;
+  label: string;
+  flag: string;
+  latlng: number[];
+  region: string;
+};

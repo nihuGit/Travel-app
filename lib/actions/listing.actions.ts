@@ -3,23 +3,26 @@
 import { getCurrentUser } from './user.actions';
 import prisma from '../primsadb';
 
-interface ListingParams {
-  title: string;
-  description: string;
-  image: string;
-  bedrooms: string;
-  bathrooms: string;
-  guests: string;
-  price: string;
-  location: string;
-  category: string;
+export interface IListingParams {
+  title?: string;
+  description?: string;
+  image?: string;
+  bedrooms?: string;
+  bathrooms?: string;
+  guests?: string;
+  price?: string;
+  location?: string;
+  category?: string;
+  startDate?: string;
+  endDate?: string;
+  userId?: string;
 }
 
-export const createListing = async (data: ListingParams) => {
+export const createListing = async (data: IListingParams) => {
   try {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
-      throw new Error('Please login first!');
+      throw new Error('Not Authorized');
     }
     const {
       category,
@@ -32,11 +35,19 @@ export const createListing = async (data: ListingParams) => {
       price,
       location,
     } = data;
-    Object.keys(data).forEach((key: string) => {
-      if (!data[key]) {
-        throw new Error('Please fill all the fields!');
-      }
-    });
+    if (
+      !category ||
+      !title ||
+      !description ||
+      !image ||
+      !bedrooms ||
+      !bathrooms ||
+      !guests ||
+      !price ||
+      !location
+    ) {
+      throw new Error('Please fill all the fields');
+    }
 
     await prisma.listing.create({
       data: {
@@ -44,11 +55,11 @@ export const createListing = async (data: ListingParams) => {
         title,
         description,
         image,
-        bedrooms: parseInt(bedrooms),
-        bathrooms: parseInt(bathrooms),
-        guests: parseInt(guests),
+        bedrooms: +bedrooms,
+        bathrooms: +bathrooms,
+        guests: +guests,
         price: parseInt(price, 10),
-        location: location.label,
+        location,
         category,
       },
     });
@@ -57,16 +68,54 @@ export const createListing = async (data: ListingParams) => {
   }
 };
 
-export interface IListingParams {
-  userId?: string;
-}
-
 export const getAllListings = async (params: IListingParams) => {
   try {
-    const { userId } = params;
+    const {
+      userId,
+      location,
+      guests,
+      bedrooms,
+      bathrooms,
+      category,
+      startDate,
+      endDate,
+    } = params;
     let query: any = {};
     if (userId) {
       query.userId = userId;
+    }
+    if (location) {
+      query.location = location;
+    }
+    if (guests) {
+      query.guests = { gte: +guests };
+    }
+    if (bedrooms) {
+      query.bedrooms = { gte: +bedrooms };
+    }
+    if (bathrooms) {
+      query.bathrooms = { gte: +bathrooms };
+    }
+    if (category) {
+      query.category = category;
+    }
+    if (startDate && endDate) {
+      query.NOT = {
+        reservations: {
+          some: {
+            OR: [
+              {
+                endDate: { gte: startDate },
+                startDate: { lte: endDate },
+              },
+              {
+                startDate: { lte: endDate },
+                endDate: { gte: startDate },
+              },
+            ],
+          },
+        },
+      };
     }
 
     const listings = await prisma.listing.findMany({

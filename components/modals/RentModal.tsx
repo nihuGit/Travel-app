@@ -93,7 +93,10 @@ const RentModal = () => {
     }
     setIsLoading(true);
     try {
-      await createListing(data);
+      await createListing({
+        ...data,
+        location: data.location?.label,
+      });
       reset();
       router.refresh();
       toast.success('Listing created!');
