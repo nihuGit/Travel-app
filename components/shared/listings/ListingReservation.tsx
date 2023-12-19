@@ -40,7 +40,7 @@ const ListingReservation = ({
         <Button disabled={disabled} label='Reserve' onClick={onSubmit} />
       </div>
       <hr />
-      <div className='flex-between text-lg font-semibold text-neutral-800 p-4'>
+      <div className='flex-between text-medium-large text-neutral-800 p-4'>
         <p>Total</p>
         <p>${totalAmount}</p>
       </div>

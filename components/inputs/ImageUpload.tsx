@@ -24,28 +24,9 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
     >
       {({ open }) => {
         return (
-          <div
-            onClick={() => open?.()}
-            className='
-            relative 
-            cursor-pointer 
-            flex 
-            flex-col 
-            gap-3 
-            justify-center 
-            items-center 
-            p-20 
-            border 
-            border-dashed 
-            border-neutral-300 
-            transition 
-            rounded-lg 
-            hover:opacity-70'
-          >
+          <div onClick={() => open?.()} className='upload-box'>
             <TbPhotoPlus size={50} />
-            <p className='text-neutral-800 font-medium text-xl'>
-              Click to Upload
-            </p>
+            <p className='text-medium-extra'>Click to Upload</p>
 
             {value && (
               <div className='absolute inset-0 z-10 w-full h-full'>

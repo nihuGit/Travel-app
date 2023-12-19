@@ -56,9 +56,24 @@ const Modal = ({
           } ${showModal ? 'opacity-100' : 'opacity-0'}`}
         >
           <div className='modal-content'>
-            <div className='p-6 flex-center border-b relative rounded-t'>
+            <div
+              className='
+            p-6 
+            flex-center 
+            border-b 
+            relative 
+            rounded-t
+            '
+            >
               <button
-                className='absolute left-9 cursor-pointer transition hover:opacity-70 border-0 p-1'
+                className='
+                absolute 
+                left-9 
+                cursor-pointer 
+                transition 
+                hover:opacity-70 
+                border-0 
+                p-1'
                 onClick={handleClose}
               >
                 <IoMdClose size={18} />
@@ -66,7 +81,7 @@ const Modal = ({
               <p className='text-bold-large'>{title}</p>
             </div>
             <div className='relative p-6'>{body}</div>
-            <div className='relative flex flex-col gap-2 pb-6 px-6'>
+            <div className='relative flex-col-start gap-2 pb-6 px-6'>
               <div className='flex items-center gap-4'>
                 {secondaryAction && secondaryActionLabel && (
                   <Button

@@ -52,7 +52,6 @@ const ListingCard = ({
   return (
     <Link
       className='w-full group col-span-1 cursor-pointer'
-      // onClick={() => router.push(`/listings/${listing.id}`)}
       href={`/listings/${listing.id}`}
     >
       <div className='flex flex-col gap-2 w-full'>
@@ -70,9 +69,7 @@ const ListingCard = ({
         <p className='text-medium-large'>
           {location?.region}, {location?.label}
         </p>
-        <p className='text-neutral-500 font-light'>
-          {reservationDate || listing.category}
-        </p>
+        <p className='text-light'>{reservationDate || listing.category}</p>
         <div className='flex gap-1'>
           <p className='font-semibold'>${listing.price}</p>
           {!reservationDate && <p className='font-light'>night</p>}

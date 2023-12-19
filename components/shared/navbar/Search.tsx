@@ -40,7 +40,15 @@ const Search = () => {
     <div className='main-search' onClick={searchModal.onOpen}>
       <div className='flex-between'>
         <p className='text-medium-small px-6'>{locationLabel}</p>
-        <div className='hidden sm:block border-x-[1px] text-medium-small px-6 border-x-neutral-200'>
+        <div
+          className='
+        hidden 
+        sm:block 
+        border-x-[1px] 
+        text-medium-small 
+        px-6 
+        border-x-neutral-200'
+        >
           {durationLabel}
         </div>
         <div className='flex-center pl-6 pr-2 gap-4'>

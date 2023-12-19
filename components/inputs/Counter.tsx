@@ -20,7 +20,7 @@ const Counter = ({ title, subtitle, value, onChange }: CounterProps) => {
   };
   return (
     <div className='flex-between gap-3'>
-      <div className='flex flex-col'>
+      <div className='flex-col-start'>
         <div className='font-bold text-lg'>{title}</div>
         <p className='font-medium text-md text-neutral-500'>{subtitle}</p>
       </div>

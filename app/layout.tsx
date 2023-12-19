@@ -13,7 +13,7 @@ import './globals.css';
 const nunito = Nunito({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Airbnb',
+  title: 'Airbnb | Vacation rentals, cabins, beach houses, & more',
   description: 'Airbnb Clone created using Next.js',
 };
 

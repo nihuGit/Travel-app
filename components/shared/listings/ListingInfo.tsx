@@ -30,15 +30,13 @@ const ListingInfo = ({
   const coordinates = getCountry(location)?.latlng;
   const Map = dynamic(() => import('../Map'), { ssr: false });
   return (
-    <div className='col-span-4 flex flex-col gap-8'>
-      <div className='flex flex-col gap-2'>
+    <div className='col-span-4 flex-col-start gap-8'>
+      <div className='flex-col-start gap-2'>
         <div className='flex items-center gap-2'>
-          <p className='text-xl font-semibold text-neutral-800'>
-            Hosted by {user?.name}
-          </p>
+          <p className='text-medium-extra'>Hosted by {user?.name}</p>
           <Avatar image={user?.image} />
         </div>
-        <div className='flex items-center gap-4 font-light text-neutral-500'>
+        <div className='flex items-center gap-4 text-light'>
           <p>{roomsCount} Rooms</p>
           <p>{bathroomsCount} Bathrooms</p>
           <p>{guestsCount} Guests</p>
@@ -53,7 +51,7 @@ const ListingInfo = ({
         />
       )}
       <hr />
-      <p className='text-lg font-light text-neutral-500'>{description}</p>
+      <p className='text-light-large'>{description}</p>
       <hr />
       <Map center={coordinates} />
     </div>

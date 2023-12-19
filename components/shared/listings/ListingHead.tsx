@@ -28,7 +28,16 @@ const ListingHead = ({
         title={title}
         subtitle={`${location.region}, ${location.label}`}
       />
-      <div className='relative w-full h-[60vh] overflow-hidden transition cursor-pointer rounded-xl'>
+      <div
+        className='
+      relative 
+      w-full 
+      h-[60vh] 
+      overflow-hidden 
+      transition 
+      cursor-pointer 
+      rounded-xl'
+      >
         <Image src={image} alt='Listing' fill className='object-cover w-full' />
         <div className='absolute top-5 right-5'>
           <HeartButton listingId={id} currentUser={currentUser} />
