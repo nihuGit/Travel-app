@@ -11,7 +11,8 @@ interface UserParams {
   password: string;
 }
 
-export async function registerUser({ name, email, password }: UserParams) {
+export async function registerUser(user: UserParams) {
+  const { name, email, password } = user;
   // Check if user already exists
   const existingUser = await prisma.user.findUnique({
     where: {

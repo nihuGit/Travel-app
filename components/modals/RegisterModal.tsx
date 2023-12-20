@@ -96,7 +96,11 @@ const RegisterModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
     try {
-      await registerUser(data);
+      await registerUser({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
       toast.success('Registered successfully');
       registerModal.onClose();
       loginModal.onOpen();
