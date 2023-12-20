@@ -80,7 +80,7 @@ const Modal = ({
               </button>
               <p className='text-bold-large'>{title}</p>
             </div>
-            <div className='relative p-6'>{body}</div>
+            <div className='relative p-6 flex-auto'>{body}</div>
             <div className='flex-col-start gap-2 p-6'>
               <div className='flex items-center gap-4 w-full'>
                 {secondaryAction && secondaryActionLabel && (
