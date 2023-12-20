@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactElement, useCallback, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import Button from '@/components/ui/Button';
 
@@ -81,8 +81,8 @@ const Modal = ({
               <p className='text-bold-large'>{title}</p>
             </div>
             <div className='relative p-6'>{body}</div>
-            <div className='relative flex-col-start gap-2 pb-6 px-6'>
-              <div className='flex items-center gap-4'>
+            <div className='flex-col-start gap-2 p-6'>
+              <div className='flex items-center gap-4 w-full'>
                 {secondaryAction && secondaryActionLabel && (
                   <Button
                     outline
