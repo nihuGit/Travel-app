@@ -39,7 +39,7 @@ const Modal = ({
       if (modalHeight > viewportHeight) {
         modalRef.current.style.marginTop = `calc(${
           modalHeight - viewportHeight
-        }px + 5rem)`;
+        }px + 3rem)`;
       }
     }
   }, []);
@@ -80,12 +80,11 @@ const Modal = ({
     <div className='modal-overlay'>
       <div className='modal-container'>
         <div
-          ref={modalRef}
           className={`translate duration-300 h-full ${
             showModal ? 'translate-y-0' : 'translate-y-full'
           } ${showModal ? 'opacity-100' : 'opacity-0'}`}
         >
-          <div className='modal-content'>
+          <div className='modal-content' ref={modalRef}>
             <div
               className='
             p-6 
