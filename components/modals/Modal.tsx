@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import Button from '@/components/ui/Button';
 
@@ -30,10 +30,39 @@ const Modal = ({
   secondaryActionLabel,
 }: ModalProps) => {
   const [showModal, setShowModal] = useState(isOpen);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const handleModalMarginTop = useCallback(() => {
+    if (modalRef.current) {
+      const viewportHeight = window.innerHeight;
+      const modalHeight = modalRef.current.clientHeight;
+
+      if (modalHeight > viewportHeight) {
+        modalRef.current.style.marginTop = `calc(${
+          modalHeight - viewportHeight
+        }px + 3rem)`;
+      }
+    }
+  }, []);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (showModal && !modalRef?.current?.contains(event.target as Node)) {
+        setShowModal(false);
+        onClose();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [modalRef, showModal, onClose]);
 
   useEffect(() => {
     setShowModal(isOpen);
   }, [isOpen]);
+
+  useEffect(() => {
+    handleModalMarginTop();
+  }, [handleModalMarginTop]);
 
   const handleClose = () => {
     if (disabled) {
@@ -51,6 +80,7 @@ const Modal = ({
     <div className='modal-overlay'>
       <div className='modal-container'>
         <div
+          ref={modalRef}
           className={`translate duration-300 h-full ${
             showModal ? 'translate-y-0' : 'translate-y-full'
           } ${showModal ? 'opacity-100' : 'opacity-0'}`}

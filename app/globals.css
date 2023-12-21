@@ -71,9 +71,8 @@ body {
   .main-search {
     @apply rounded-full shadow-sm hover:shadow-md border cursor-pointer w-full md:w-auto py-2 transition;
   }
-
   .user-menu {
-    @apply flex-center gap-3 rounded-full border border-neutral-200 shadow-sm hover:shadow-md transition p-4 md:py-1 md:px-2 cursor-pointer;
+    @apply flex-center gap-3 rounded-full border border-neutral-200 shadow-sm hover:shadow-md transition p-4 md:py-1.5 md:px-2 cursor-pointer;
   }
   .user-menu-card {
     @apply absolute top-12 right-0 py-3 rounded-xl w-[40vw] md:w-3/4 overflow-hidden border border-neutral-200 shadow-md bg-neutral-100;
@@ -88,7 +87,7 @@ body {
     @apply relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto;
   }
   .modal-content {
-    @apply translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none;
+    @apply h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none;
   }
   .category-box {
     @apply flex flex-col justify-center items-center gap-2 cursor-pointer p-3 border-b-2 transition hover:text-neutral-800;

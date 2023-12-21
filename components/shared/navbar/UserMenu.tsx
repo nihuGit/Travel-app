@@ -4,7 +4,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { useRegisterModal } from '@/hooks/useRegisterModal';
 import { useLoginModal } from '@/hooks/useLoginModal';
 import { signOut } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SafeUser } from '@/types';
 import { useRentModal } from '@/hooks/useRentModal';
 import Avatar from '../Avatar';
@@ -19,6 +19,19 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
   const [isOpen, setIsOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isOpen && !userMenuRef.current?.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, userMenuRef]);
 
   const handleClick = () => {
     if (!currentUser) {
@@ -35,7 +48,11 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
         Airbnb your home
       </p>
 
-      <div className='user-menu' onClick={() => setIsOpen((value) => !value)}>
+      <div
+        className='user-menu'
+        ref={userMenuRef}
+        onClick={() => setIsOpen((value) => !value)}
+      >
         <AiOutlineMenu size={18} />
         <div className='hidden md:block relative w-7 h-7'>
           <Avatar image={currentUser?.image} />
@@ -59,6 +76,12 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
               </>
             ) : (
               <>
+                <div
+                  className='user-menu-card-item hidden max-md:block'
+                  onClick={() => router.push('/')}
+                >
+                  Home
+                </div>
                 <div
                   className='user-menu-card-item'
                   onClick={() => router.push('/trips')}
