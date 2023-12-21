@@ -39,7 +39,7 @@ const Modal = ({
       if (modalHeight > viewportHeight) {
         modalRef.current.style.marginTop = `calc(${
           modalHeight - viewportHeight
-        }px + 3rem)`;
+        }px + 5rem)`;
       }
     }
   }, []);
