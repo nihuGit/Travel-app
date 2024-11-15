@@ -14,17 +14,36 @@ const Navbar = ({ currentUser }: NavbarProps) => {
     <nav className='fixed z-10 bg-white shadow-sm w-full'>
       <div className='py-4 border-b'>
         <div className='main-container'>
-          <div className='flex-between gap-3 md:gap-0'>
+          {/* Mobile-specific logo: Centered above the search bar */}
+          <div className='block md:hidden flex justify-center mb-4'>
             <Link href='/'>
               <Image
                 src='/images/logo.png'
                 alt='Airbnb Logo'
-                width={100}
-                height={100}
-                className='object-contain cursor-pointer hidden md:block'
+                width={80}
+                height={80}
+                className='object-contain cursor-pointer'
               />
             </Link>
+          </div>
+
+          {/* Flex container for search and user menu - Same row for all screens */}
+          <div className='flex items-center justify-between gap-3 md:gap-0'>
+            {/* Desktop logo remains in the same place */}
+            <div className='hidden md:block'>
+              <Link href='/'>
+                <Image
+                  src='/images/logo.png'
+                  alt='Airbnb Logo'
+                  width={100}
+                  height={100}
+                  className='object-contain cursor-pointer'
+                />
+              </Link>
+            </div>
+
             <Search />
+            
             <div className='relative'>
               <UserMenu currentUser={currentUser} />
             </div>
