@@ -11,6 +11,7 @@ import RentModal from '@/components/modals/RentModal';
 import SearchModal from '@/components/modals/SearchModal';
 import MobileBottomNav from '@/components/shared/navbar/MobileBottomNav';
 import './globals.css';
+import FilterModal from '@/components/modals/FilterModal';
 
 const nunito = Nunito({ subsets: ['latin'] });
 
@@ -34,6 +35,7 @@ export default async function RootLayout({
           <RegisterModal />
           <RentModal />
           <SearchModal />
+          <FilterModal /> 
           <Navbar currentUser={currentUser} />
           <MobileBottomNav />
         </ClientOnly>

@@ -1,12 +1,13 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { SafeUser } from "@/types";
-import Link from "next/link";
-import Image from "next/image";
-import UserMenu from "./UserMenu";
-import Categories from "./Categories";
-import Search from "./Search";
+import { useState, useEffect } from 'react';
+import { SafeUser } from '@/types';
+import Link from 'next/link';
+import Image from 'next/image';
+import UserMenu from './UserMenu';
+import Categories from './Categories';
+import Search from './Search';
+import FilterButton from './FilterButton'; // Import the FilterButton component
 
 interface NavbarProps {
   currentUser?: SafeUser | null;
@@ -14,11 +15,21 @@ interface NavbarProps {
 
 const Navbar = ({ currentUser }: NavbarProps) => {
   const [isSticky, setIsSticky] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check for screen width to determine if it's mobile
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile(); // Run once on mount
+    window.addEventListener('resize', checkIsMobile);
+
+    // Handle scroll for sticky navbar on mobile screens
     const handleScroll = () => {
       if (window.innerWidth < 768) {
-        const navbar = document.getElementById("navbar");
+        const navbar = document.getElementById('navbar');
         if (navbar) {
           const navbarRect = navbar.getBoundingClientRect();
           setIsSticky(navbarRect.top <= 0);
@@ -28,12 +39,16 @@ const Navbar = ({ currentUser }: NavbarProps) => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
   return (
-    // <nav className="w-full md:fixed md:top-0 md:z-10 md:bg-white shadow-none border-none">
-    <nav className="md:fixed  z-10 bg-white shadow-none md:shadow-none border-none  w-full ">
+    <nav className="md:fixed z-10 bg-white shadow-none md:shadow-none border-none w-full">
       <div className="py-4 md:py-10 border-none">
         <div className="main-container">
           {/* Mobile-specific logo: Centered above the search bar */}
@@ -51,11 +66,11 @@ const Navbar = ({ currentUser }: NavbarProps) => {
 
           <div
             id="navbar"
-            className={`  ${
-              isSticky ? "fixed top-0 z-20 w-full bg-white shadow-none pr-7" : ""
+            className={`${
+              isSticky ? 'fixed top-0 z-20 w-full bg-white shadow-none pr-7' : ''
             }`}
           >
-            {/* Flex container for search and user menu - Same row for all screens */}
+            {/* Flex container for search and user menu/filter button */}
             <div className="flex items-center justify-between gap-3 md:gap-0 bg-white py-5 md:py-0">
               {/* Desktop logo remains in the same place */}
               <div className="hidden md:block">
@@ -72,21 +87,24 @@ const Navbar = ({ currentUser }: NavbarProps) => {
 
               <Search />
 
+              {/* Conditionally render UserMenu or FilterButton based on screen size */}
               <div className="relative">
-                <UserMenu currentUser={currentUser} />
+                {isMobile ? (
+                  <FilterButton /> // Show the FilterButton on mobile screens
+                ) : (
+                  <UserMenu currentUser={currentUser} /> // Show the UserMenu on larger screens
+                )}
               </div>
             </div>
           </div>
         </div>
         <div
-            id="navbar"
-            className={`  ${
-              isSticky ? "fixed top-[10%]  z-10 w-full bg-white shadow-md ml-0" : ""
-            }`}
-          >
-        {/* <div className="mt-2 md:mt-4"> */}
+          id="navbar"
+          className={`${
+            isSticky ? 'fixed top-[10%] z-10 w-full bg-white shadow-md ml-0' : 'shadow-md'
+          }`}
+        >
           <Categories />
-        {/* </div> */}
         </div>
       </div>
     </nav>
