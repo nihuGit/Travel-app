@@ -12,7 +12,7 @@ const Categories = () => {
     return null;
   }
   return (
-    <div className='main-container last:flex-between gap-4 w-full pt-6 overflow-x-auto'>
+    <div className='main-container last:flex-between gap-4 w-full py-2 overflow-x-auto'>
       {categories.map((item) => (
         <CategoryBox
           key={item.label}
