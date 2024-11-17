@@ -48,7 +48,7 @@ const Categories = () => {
           alignItems: 'center',
           scrollBehavior: 'smooth',
         }}
-        className="main-container flex-between w-full py-2 mx-0 px-0 overflow-x-auto"
+        className="main-container flex-between w-full py-2 mx-0 px-0 overflow-x-auto gap-2 md:gap-6"
         ref={categoriesRef}
       >
         {categories.map((item) => (
