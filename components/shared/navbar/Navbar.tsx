@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { SafeUser } from '@/types';
-import Link from 'next/link';
-import Image from 'next/image';
-import UserMenu from './UserMenu';
-import Categories from './Categories';
-import Search from './Search';
-import FilterButton from './FilterButton'; // Import the FilterButton component
+import { useRef, useState, useEffect } from "react";
+import { SafeUser } from "@/types";
+import Link from "next/link";
+import Image from "next/image";
+import UserMenu from "./UserMenu";
+import Categories from "./Categories";
+import Search from "./Search";
+import FilterButton from "./FilterButton";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 interface NavbarProps {
   currentUser?: SafeUser | null;
@@ -16,34 +17,69 @@ interface NavbarProps {
 const Navbar = ({ currentUser }: NavbarProps) => {
   const [isSticky, setIsSticky] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const categoriesRef = useRef<HTMLDivElement | null>(null);
+
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
   useEffect(() => {
-    // Check for screen width to determine if it's mobile
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    checkIsMobile(); // Run once on mount
-    window.addEventListener('resize', checkIsMobile);
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
 
-    // Handle scroll for sticky navbar on mobile screens
     const handleScroll = () => {
       if (window.innerWidth < 768) {
-        const navbar = document.getElementById('navbar');
+        const navbar = document.getElementById("navbar");
         if (navbar) {
           const navbarRect = navbar.getBoundingClientRect();
           setIsSticky(navbarRect.top <= 0);
         }
       } else {
-        setIsSticky(false); // Reset for larger screens
+        setIsSticky(false);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('resize', checkIsMobile);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("resize", checkIsMobile);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (!categoriesRef.current) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = categoriesRef.current;
+
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
+  };
+
+  const scrollLeft = () => {
+    if (categoriesRef.current) {
+      categoriesRef.current.scrollBy({ left: -300, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (categoriesRef.current) {
+      categoriesRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    if (categoriesRef.current) {
+      handleScroll();
+      categoriesRef.current.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (categoriesRef.current) {
+        categoriesRef.current.removeEventListener("scroll", handleScroll);
+      }
     };
   }, []);
 
@@ -51,7 +87,6 @@ const Navbar = ({ currentUser }: NavbarProps) => {
     <nav className="md:fixed z-10 bg-white shadow-none md:shadow-none border-none w-full">
       <div className="py-4 md:py-10 border-none">
         <div className="main-container">
-          {/* Mobile-specific logo: Centered above the search bar */}
           <div className="block md:hidden flex justify-center mb-4">
             <Link href="/">
               <Image
@@ -67,12 +102,12 @@ const Navbar = ({ currentUser }: NavbarProps) => {
           <div
             id="navbar"
             className={`${
-              isSticky ? 'fixed top-0 z-20 w-full bg-white shadow-none pr-7' : ''
+              isSticky
+                ? "fixed top-0 z-20 w-full bg-white shadow-none pr-7"
+                : ""
             }`}
           >
-            {/* Flex container for search and user menu/filter button */}
             <div className="flex items-center justify-between gap-3 md:gap-0 bg-white py-5 md:py-0">
-              {/* Desktop logo remains in the same place */}
               <div className="hidden md:block">
                 <Link href="/">
                   <Image
@@ -87,24 +122,68 @@ const Navbar = ({ currentUser }: NavbarProps) => {
 
               <Search />
 
-              {/* Conditionally render UserMenu or FilterButton based on screen size */}
               <div className="relative">
                 {isMobile ? (
-                  <FilterButton /> // Show the FilterButton on mobile screens
+                  <FilterButton />
                 ) : (
-                  <UserMenu currentUser={currentUser} /> // Show the UserMenu on larger screens
+                  <UserMenu currentUser={currentUser} />
                 )}
               </div>
             </div>
           </div>
         </div>
+
         <div
           id="navbar"
           className={`${
-            isSticky ? 'fixed top-[10%] z-10 w-full bg-white shadow-md ml-0' : 'shadow-md'
+            isSticky
+              ? "fixed top-[10%] z-10 w-full bg-white shadow-md ml-0"
+              : "shadow-md"
           }`}
         >
-          <Categories />
+          <div className="flex md:w-4/5 mx-auto items-center justify-center md:pt-5  px-4 md:px-8">
+            {/* Left Arrow */}
+            <button
+              style={{
+                transition: "all 0.3s ease-in-out",
+                opacity: canScrollLeft ? 1 : 0.5,
+                cursor: canScrollLeft ? "pointer" : "not-allowed",
+              }}
+              className="hidden md:block p-2 bg-white border rounded-full shadow-md"
+              onClick={scrollLeft}
+              disabled={!canScrollLeft}
+            >
+              <FaChevronLeft size={18} />
+            </button>
+
+            {/* Categories Container */}
+            <div
+              ref={categoriesRef}
+              className="flex overflow-x-auto md:overflow-x-hidden items-center"
+              onScroll={handleScroll}
+            >
+              <Categories />
+            </div>
+
+            {/* Right Arrow */}
+            <button
+              style={{
+                transition: "all 0.3s ease-in-out",
+                opacity: canScrollRight ? 1 : 0.5,
+                cursor: canScrollRight ? "pointer" : "not-allowed",
+              }}
+              className="hidden md:block p-2 bg-white border rounded-full shadow-md ml-4"
+              onClick={scrollRight}
+              disabled={!canScrollRight}
+            >
+              <FaChevronRight size={18} />
+            </button>
+
+            {/* Filter Button (Outside Scroll & Right Arrow) */}
+            <div className="hidden md:block ml-10">
+              <FilterButton />
+            </div>
+          </div>
         </div>
       </div>
     </nav>

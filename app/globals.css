@@ -167,3 +167,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@media (min-width: 768px) {
+  #navbar .overflow-x-auto {
+    overflow-x: hidden; /* Disable horizontal scrolling */
+  }
+}

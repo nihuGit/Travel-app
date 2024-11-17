@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import Modal from '@/components/modals/Modal';
-import {useFilterModal} from '@/hooks/useFilterModal';
+import { useFilterModal } from '@/hooks/useFilterModal';
 
 interface Filters {
   priceRange: number[];
@@ -14,7 +14,8 @@ interface Filters {
 const FilterModal: React.FC = () => {
   const { isOpen, closeModal } = useFilterModal(); // Access modal state
   const [showModal, setShowModal] = useState(false); // Animation state
-  const [priceRange, setPriceRange] = useState<number[]>([0, 500]);
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(500);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -32,7 +33,20 @@ const FilterModal: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    const filters: Filters = { priceRange, categories: selectedCategories };
+    let validatedMinPrice = minPrice;
+    let validatedMaxPrice = maxPrice;
+
+    // Validate price range before submission
+    if (minPrice >= maxPrice) {
+      validatedMinPrice = maxPrice - 10; // Adjust min price
+      validatedMaxPrice = minPrice + 10; // Adjust max price
+    }
+
+    const filters: Filters = {
+      priceRange: [validatedMinPrice, validatedMaxPrice],
+      categories: selectedCategories,
+    };
+
     console.log('Filters submitted:', filters); // Replace with real filter logic
     closeModal(); // Close modal
   };
@@ -41,19 +55,36 @@ const FilterModal: React.FC = () => {
 
   const modalBody = (
     <div className="flex flex-col gap-6">
-      {/* Price Slider */}
+      {/* Price Sliders */}
       <div>
         <p className="text-lg font-medium mb-2">Select Price Range</p>
-        <Slider
-          value={priceRange}
-          onValueChange={setPriceRange}
-          max={1000}
-          step={50}
-          className="w-full"
-        />
-        <p className="text-sm text-gray-500 mt-2">
-          ${priceRange[0]} - ${priceRange[1]}
-        </p>
+        <div className="flex flex-col gap-6">
+          {/* Minimum Price Slider */}
+          <div>
+            <p className="text-sm font-medium mb-1">Min Price</p>
+            <Slider
+              value={[minPrice]}
+              onValueChange={(value) => setMinPrice(value[0])}
+              max={1000} // Allow independent control
+              step={10}
+              className="w-full h-6"
+            />
+            <p className="text-sm text-gray-500 mt-2">${minPrice}</p>
+          </div>
+          {/* Maximum Price Slider */}
+          <div>
+            <p className="text-sm font-medium mb-1">Max Price</p>
+            <Slider
+              value={[maxPrice]}
+              onValueChange={(value) => setMaxPrice(value[0])}
+              min={0} // Allow independent control
+              max={1000}
+              step={10}
+              className="w-full h-6"
+            />
+            <p className="text-sm text-gray-500 mt-2">${maxPrice}</p>
+          </div>
+        </div>
       </div>
 
       {/* Category Filters */}
